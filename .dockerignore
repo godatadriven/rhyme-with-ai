@@ -1,0 +1,14 @@
+Dockerfile
+*.pyc
+*.pyo
+*.pyd
+*.bak
+*Image.txt
+*404.txt
+*404.PNG
+__pycache__
+
+data/
+notebooks/
+scratch/
+**/__pycache__

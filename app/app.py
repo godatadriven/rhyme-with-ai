@@ -48,7 +48,7 @@ def start_rhyming(query, rhyme_words_options):
 
     current_sentences = [" " for _ in range(N_RHYMES)]
     for i in range(max_iter):
-        progress_bar.progress(i / max_iter)
+        progress_bar.progress(i / (max_iter + 1))
         previous_sentences = copy.deepcopy(current_sentences)
         current_sentences = sentence_generator.mutate()
         display_output(status_text, query, current_sentences, previous_sentences)

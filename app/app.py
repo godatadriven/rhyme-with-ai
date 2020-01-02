@@ -6,7 +6,7 @@ from rhyme_with_ai.rhyme_generator import RhymeGenerator
 from rhyme_with_ai.utils import color_new_words, sanitize
 from transformers import BertTokenizer, TFBertForMaskedLM
 
-DEFAULT_QUERY = "Santa delivers gifts by sleigh"
+DEFAULT_QUERY = "Machines will take over the world soon"
 N_RHYMES = 10
 ITER_FACTOR = 5
 MODEL_PATH = "./data/bert-large-cased-whole-word-masking"

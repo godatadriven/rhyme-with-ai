@@ -13,6 +13,17 @@ MODEL_PATH = "./data/bert-large-cased-whole-word-masking"
 
 
 def main():
+    st.markdown(
+        "<sup>Created with "
+        "[Datamuse](https://www.datamuse.com/api/), "
+        "[Hugging Face](https://huggingface.co/), "
+        "[Streamlit](https://streamlit.io/) and "
+        "[App Engine](https://cloud.google.com/appengine/)."
+        " Read our [blog](https://blog.godatadriven.com/rhyme-with-ai) "
+        "or check the "
+        "[source](https://github.com/godatadriven/rhyme-with-ai).</sup>",
+        unsafe_allow_html=True,
+    )
     st.title("Rhyme with AI")
     query = get_query()
     if not query:

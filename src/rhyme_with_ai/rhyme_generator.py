@@ -116,7 +116,6 @@ class RhymeGenerator:
                     )
                 )
             )
-        self._logger.info(rhymes)
         return rhymes
 
     def _mutate(

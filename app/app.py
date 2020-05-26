@@ -13,9 +13,9 @@ ITER_FACTOR = 5
 
 LANGUAGE = st.sidebar.radio("Language",["english","dutch"],0)
 if LANGUAGE == "english":
-    MODEL_PATH = "bert-large-cased-whole-word-masking"
+    MODEL_PATH = "./data/bert-large-cased-whole-word-masking-finetuned-squad"
 elif LANGUAGE == "dutch":
-    MODEL_PATH = "wietsedv/bert-base-dutch-cased"
+    MODEL_PATH = "./data/wietsedv/bert-base-dutch-cased"
 else:
     raise NotImplementedError(f"Unsupported language ({LANGUAGE}) expected 'english' or 'dutch'.")
 

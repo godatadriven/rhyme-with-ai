@@ -11,13 +11,13 @@ N_RHYMES = 10
 ITER_FACTOR = 5
 
 
-language = st.sidebar.radio("Language",["english","dutch"],0)
-if language == "english":
+LANGUAGE = st.sidebar.radio("Language",["english","dutch"],0)
+if LANGUAGE == "english":
     MODEL_PATH = "bert-large-cased-whole-word-masking"
-elif language == "dutch":
+elif LANGUAGE == "dutch":
     MODEL_PATH = "wietsedv/bert-base-dutch-cased"
 else:
-    raise NotImplementedError(f"Unsupported language ({language}) expected 'english' or 'dutch'.")
+    raise NotImplementedError(f"Unsupported language ({LANGUAGE}) expected 'english' or 'dutch'.")
 
 def main():
     st.markdown(
@@ -36,7 +36,7 @@ def main():
     query = get_query()
     if not query:
         query = DEFAULT_QUERY
-    rhyme_words_options = query_rhyme_words(query, n_rhymes=N_RHYMES,language=language)
+    rhyme_words_options = query_rhyme_words(query, n_rhymes=N_RHYMES,language=LANGUAGE)
     if rhyme_words_options:
         start_rhyming(query, rhyme_words_options)
     else:

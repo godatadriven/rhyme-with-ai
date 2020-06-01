@@ -1,10 +1,14 @@
+import functools
+import random
 from typing import List, Optional
 
 import requests
+from gazpacho import Soup, get
+
 from rhyme_with_ai.utils import find_last_word
 
 
-def query_rhyme_words(sentence: str, n_rhymes: Optional[int] = None) -> List[str]:
+def query_rhyme_words(sentence: str, n_rhymes: int, language:str="english") -> List[str]:
     """Returns a list of rhyme words for a sentence.
 
     Parameters
@@ -17,7 +21,12 @@ def query_rhyme_words(sentence: str, n_rhymes: Optional[int] = None) -> List[str
         List[str] -- List of words that rhyme with the final word
     """
     last_word = find_last_word(sentence)
-    return query_datamuse_api(last_word, n_rhymes)
+    if language == "english":
+       return query_datamuse_api(last_word, n_rhymes)
+    elif language == "dutch":
+        return mick_rijmwoordenboek(last_word, n_rhymes)
+    else:
+        raise NotImplementedError(f"Unsupported language ({language}) expected 'english' or 'dutch'.")
 
 
 def query_datamuse_api(word: str, n_rhymes: Optional[int] = None) -> List[str]:
@@ -39,3 +48,20 @@ def query_datamuse_api(word: str, n_rhymes: Optional[int] = None) -> List[str]:
     if n_rhymes is None:
         return words
     return words[:n_rhymes]
+
+
+@functools.lru_cache(maxsize=128, typed=False)
+def mick_rijmwoordenboek(word: str, n_words: int):
+    url = f"https://rijmwoordenboek.nl/rijm/{word}"
+    html = get(url)
+    soup = Soup(html)
+
+    results = soup.find("div", {"id": "rhymeResultsWords"}).html.split("<br />")
+
+    # clean up
+    results = [r.replace("\n", "").replace(" ", "") for r in results]
+
+    # filter html and empty strings
+    results = [r for r in results if ("<" not in r) and (len(r) > 0)]
+
+    return random.sample(results, min(len(results), n_words))

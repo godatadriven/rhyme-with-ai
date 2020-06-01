@@ -9,13 +9,21 @@ from transformers import BertTokenizer, TFBertForMaskedLM
 DEFAULT_QUERY = "Machines will take over the world soon"
 N_RHYMES = 10
 ITER_FACTOR = 5
-MODEL_PATH = "./data/bert-large-cased-whole-word-masking"
 
+
+LANGUAGE = st.sidebar.radio("Language",["english","dutch"],0)
+if LANGUAGE == "english":
+    MODEL_PATH = "./data/bert-large-cased-whole-word-masking-finetuned-squad"
+elif LANGUAGE == "dutch":
+    MODEL_PATH = "./data/wietsedv/bert-base-dutch-cased"
+else:
+    raise NotImplementedError(f"Unsupported language ({LANGUAGE}) expected 'english' or 'dutch'.")
 
 def main():
     st.markdown(
         "<sup>Created with "
         "[Datamuse](https://www.datamuse.com/api/), "
+        "[Mick's rijmwoordenboek](https://rijmwoordenboek.nl)"
         "[Hugging Face](https://huggingface.co/), "
         "[Streamlit](https://streamlit.io/) and "
         "[App Engine](https://cloud.google.com/appengine/)."
@@ -28,7 +36,7 @@ def main():
     query = get_query()
     if not query:
         query = DEFAULT_QUERY
-    rhyme_words_options = query_rhyme_words(query)
+    rhyme_words_options = query_rhyme_words(query, n_rhymes=N_RHYMES,language=LANGUAGE)
     if rhyme_words_options:
         start_rhyming(query, rhyme_words_options)
     else:

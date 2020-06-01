@@ -11,21 +11,34 @@ RUN apt-get update && apt-get install -y \
     gcc
 
 # TODO: Replace by Docker volume?
-RUN mkdir -p ${APP_HOME}/data/bert-large-cased-whole-word-masking
+RUN mkdir -p ${APP_HOME}/data/bert-large-cased-whole-word-masking-finetuned-squad
 RUN curl \
-        -o ${APP_HOME}/data/bert-large-cased-whole-word-masking/config.json \
+        -o ${APP_HOME}/data/bert-large-cased-whole-word-masking-finetuned-squad/config.json \
         https://s3.amazonaws.com/models.huggingface.co/bert/bert-large-cased-whole-word-masking-config.json
 
 RUN curl \
-        -o ${APP_HOME}/data/bert-large-cased-whole-word-masking/vocab.txt \
+        -o ${APP_HOME}/data/bert-large-cased-whole-word-masking-finetuned-squad/vocab.txt \
         https://s3.amazonaws.com/models.huggingface.co/bert/bert-large-cased-whole-word-masking-vocab.txt
 
 RUN curl \
-        -o ${APP_HOME}/data/bert-large-cased-whole-word-masking/tf_model.h5 \
-        https://s3.amazonaws.com/models.huggingface.co/bert/bert-large-cased-whole-word-masking-tf_model.h5
+        -o ${APP_HOME}/data/bert-large-cased-whole-word-masking-finetuned-squad/tf_model.h5 \
+        https://cdn.huggingface.co/bert-large-cased-whole-word-masking-finetuned-squad-tf_model.h5
+
+RUN mkdir -p ${APP_HOME}/data/wietsedv/bert-base-dutch-cased
+RUN curl \
+        -o ${APP_HOME}/data/wietsedv/bert-base-dutch-cased/config.json \
+        https://s3.amazonaws.com/models.huggingface.co/bert/wietsedv/bert-base-dutch-cased/config.json
+
+RUN curl \
+        -o ${APP_HOME}/data/wietsedv/bert-base-dutch-cased/vocab.txt \
+        https://s3.amazonaws.com/models.huggingface.co/bert/wietsedv/bert-base-dutch-cased/vocab.txt
+
+RUN curl \
+        -o ${APP_HOME}/data/wietsedv/bert-base-dutch-cased/tf_model.h5 \
+        https://cdn.huggingface.co/wietsedv/bert-base-dutch-cased/tf_model.h5
 
 # Pin python-dateutil for boto errors maybe?
-RUN pip install tensorflow transformers streamlit numpy requests python-dateutil==2.8.0
+RUN pip install tensorflow transformers streamlit numpy requests gazpacho python-dateutil==2.8.0
 
 ADD . ${APP_HOME}
 RUN pip install ${APP_HOME}

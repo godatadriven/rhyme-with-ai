@@ -15,6 +15,12 @@ Install the `rhyme_with_ai` package and all its dependencies:
 pip install --editable .
 ```
 
+Download the weights of the models (if you get any errors, make sure these align with those specified in `app/app.py`)):
+
+```bash
+make download-data
+```
+
 Run the app:
 
 ```bash
@@ -32,9 +38,9 @@ This project uses [black](https://github.com/ambv/black) for code formatting.
 To incorporate it in your version control follow the instructions below (copied from black's own readme):
 
 ---
-Use [pre-commit](https://pre-commit.com/). Once you [have it
-installed](https://pre-commit.com/#install), add this to the
-`.pre-commit-config.yaml` in your repository:
+
+Use [pre-commit](https://pre-commit.com/). Once you [have it installed](https://pre-commit.com/#install), add this to the `.pre-commit-config.yaml` in your repository:
+
 ```yaml
 repos:
 -   repo: https://github.com/ambv/black
@@ -43,6 +49,7 @@ repos:
     - id: black
       language_version: python3.7
 ```
+
 Then run `pre-commit install` and you're ready to go.
 
 

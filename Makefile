@@ -90,27 +90,37 @@ install: clean ## install the package to the active Python's site-packages
 	python setup.py install
 
 download-data:
+	mkdir -p data/bert-large-cased-whole-word-masking-finetuned-squad
 	curl \
-		-o data/bert-large-cased-whole-word-masking/config.json \
+		-o data/bert-large-cased-whole-word-masking-finetuned-squad/config.json \
 		https://s3.amazonaws.com/models.huggingface.co/bert/bert-large-cased-whole-word-masking-config.json
 	curl \
-		-o data/bert-large-cased-whole-word-masking/vocab.txt \
+		-o data/bert-large-cased-whole-word-masking-finetuned-squad/vocab.txt \
 		https://s3.amazonaws.com/models.huggingface.co/bert/bert-large-cased-whole-word-masking-vocab.txt
 	curl \
-		-o data/bert-large-cased-whole-word-masking/tf_model.h5 \
-		https://s3.amazonaws.com/models.huggingface.co/bert/bert-large-cased-whole-word-masking-tf_model.h5
+		-o data/bert-large-cased-whole-word-masking-finetuned-squad/tf_model.h5 \
+		https://cdn.huggingface.co/bert-large-cased-whole-word-masking-finetuned-squad-tf_model.h5
+	mkdir -p data/wietsedv/bert-base-dutch-cased
+	curl \
+        -o data/wietsedv/bert-base-dutch-cased/config.json \
+        https://s3.amazonaws.com/models.huggingface.co/bert/wietsedv/bert-base-dutch-cased/config.json
+
+	curl \
+        -o data/wietsedv/bert-base-dutch-cased/vocab.txt \
+        https://s3.amazonaws.com/models.huggingface.co/bert/wietsedv/bert-base-dutch-cased/vocab.txt
+
+	curl \
+        -o data/wietsedv/bert-base-dutch-cased/tf_model.h5 \
+        https://cdn.huggingface.co/wietsedv/bert-base-dutch-cased/tf_model.h5
 
 streamlit:
 	streamlit run app/app.py
 
 docker-build: ## build a docker container for the package
-	docker build --rm -f "Dockerfile" -t textgenerator:latest "."
+	docker build --rm -f "Dockerfile" -t rhyme-with-ai:latest "."
 
 docker-train: ## train a model insider docker
-	docker run --rm -it -p 8080:8080/tcp textgenerator:latest
-	#docker run -v `pwd`/model:/model -v `pwd`/../../data:/data \
-	#	titanic-model fit --output_path /model/model.pkl /data/train.csv
+	docker run --rm -it -p 8080:8080/tcp rhyme-with-ai:latest
 
 docker-serve: ## serve a trained model from inside docker
-	#docker run -v `pwd`/model:/model -p 5000:5000 titanic-model serve --host 0.0.0.0 /model/model.pkl
-	docker run --rm -it -p 8080:8080/tcp textgenerator:latest
+	docker run --rm -it -p 8080:8080/tcp rhyme-with-ai:latest

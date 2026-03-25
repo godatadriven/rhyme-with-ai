@@ -10,7 +10,7 @@ requirements = [
     "pandas",
     "requests",
     # Pin streamlit because 0.52.0 contains a pop-up bug.
-    "streamlit==0.51.0",
+    "streamlit==1.54.0",
     "tensorflow",
     "transformers",
 ]
